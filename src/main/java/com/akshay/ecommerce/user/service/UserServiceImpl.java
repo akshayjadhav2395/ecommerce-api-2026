@@ -6,6 +6,7 @@ import com.akshay.ecommerce.user.entity.User;
 import com.akshay.ecommerce.common.exception.ResourceAlreadyExistsException;
 import com.akshay.ecommerce.user.mapper.UserMapper;
 import com.akshay.ecommerce.user.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,8 +14,11 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -26,6 +30,8 @@ public class UserServiceImpl implements UserService {
             throw new ResourceAlreadyExistsException("Email already exists");
         }
         else {
+
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
             User savedUser = userRepository.save(user);
 
             return UserMapper.toResponse(userRepository.save(savedUser));
