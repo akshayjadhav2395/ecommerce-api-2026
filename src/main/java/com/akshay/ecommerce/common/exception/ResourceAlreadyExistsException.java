@@ -1,4 +1,4 @@
-package com.akshay.ecommerce.user.exception;
+package com.akshay.ecommerce.common.exception;
 
 public class ResourceAlreadyExistsException extends RuntimeException {
 

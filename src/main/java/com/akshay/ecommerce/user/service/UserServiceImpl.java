@@ -3,10 +3,9 @@ package com.akshay.ecommerce.user.service;
 import com.akshay.ecommerce.user.dto.UserRequest;
 import com.akshay.ecommerce.user.dto.UserResponse;
 import com.akshay.ecommerce.user.entity.User;
-import com.akshay.ecommerce.user.exception.ResourceAlreadyExistsException;
+import com.akshay.ecommerce.common.exception.ResourceAlreadyExistsException;
 import com.akshay.ecommerce.user.mapper.UserMapper;
 import com.akshay.ecommerce.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
