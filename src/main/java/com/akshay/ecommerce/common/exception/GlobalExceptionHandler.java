@@ -2,6 +2,7 @@ package com.akshay.ecommerce.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -49,8 +50,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<Void>> globalExceptionHandler(Exception exception) {
-        
+    public ResponseEntity<ApiResponse<Void>> globalExceptionHandler(Exception exception) throws Exception {
+
+        // Let Spring Security handle authorization exceptions
+        if (exception instanceof AuthorizationDeniedException) {
+            throw exception;
+        }
+
         ApiResponse<Void> apiResponse = new ApiResponse<>(
                 false,
                 "Something went wrong. Please contact support.",

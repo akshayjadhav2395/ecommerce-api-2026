@@ -13,8 +13,8 @@ public class EcommerceApiApplication {
 		SpringApplication.run(EcommerceApiApplication.class, args);
 	}
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+//	@Bean
+//	public PasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	}
 }

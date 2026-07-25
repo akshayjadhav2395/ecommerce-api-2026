@@ -9,6 +9,9 @@ import com.akshay.ecommerce.user.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -21,20 +24,29 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Override
-    public UserResponse saveUser(UserRequest request) {
+//    @Override
+//    public UserResponse saveUser(UserRequest request) {
+//
+//        User user = UserMapper.toEntity(request);
+//
+//        if(userRepository.existsByEmail(request.getEmail())) {
+//            throw new ResourceAlreadyExistsException("Email already exists");
+//        }
+//        else {
+//
+//            user.setPassword(passwordEncoder.encode(request.getPassword()));
+//            User savedUser = userRepository.save(user);
+//
+//            return UserMapper.toResponse(savedUser);
+//        }
+//    }
 
-        User user = UserMapper.toEntity(request);
+    public List<UserResponse> getUsers() {
 
-        if(userRepository.existsByEmail(request.getEmail())) {
-            throw new ResourceAlreadyExistsException("Email already exists");
-        }
-        else {
+        List<User> users = this.userRepository.findAll();
 
-            user.setPassword(passwordEncoder.encode(request.getPassword()));
-            User savedUser = userRepository.save(user);
+        List<UserResponse> userResponseList = users.stream().map(user -> UserMapper.toResponse(user)).collect(Collectors.toList());
 
-            return UserMapper.toResponse(userRepository.save(savedUser));
-        }
+        return userResponseList;
     }
 }
