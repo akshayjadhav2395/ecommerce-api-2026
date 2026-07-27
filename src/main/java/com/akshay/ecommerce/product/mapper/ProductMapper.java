@@ -1,5 +1,6 @@
 package com.akshay.ecommerce.product.mapper;
 
+import com.akshay.ecommerce.category.entity.Category;
 import com.akshay.ecommerce.product.dto.ProductRequest;
 import com.akshay.ecommerce.product.dto.ProductResponse;
 import com.akshay.ecommerce.product.entity.Product;
@@ -34,6 +35,8 @@ public class ProductMapper {
                 .status(product.getStatus())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
+                .categoryId(product.getCategory().getId())
+                .categoryName(product.getCategory().getName())
                 .build();
     }
 }

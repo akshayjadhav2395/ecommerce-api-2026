@@ -1,5 +1,6 @@
 package com.akshay.ecommerce.product.entity;
 
+import com.akshay.ecommerce.category.entity.Category;
 import com.akshay.ecommerce.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -51,4 +52,7 @@ public class Product extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 }

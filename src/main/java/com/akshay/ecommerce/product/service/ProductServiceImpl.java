@@ -1,5 +1,7 @@
 package com.akshay.ecommerce.product.service;
 
+import com.akshay.ecommerce.category.entity.Category;
+import com.akshay.ecommerce.category.repository.CategoryRepository;
 import com.akshay.ecommerce.common.exception.ResourceAlreadyExistsException;
 import com.akshay.ecommerce.common.exception.ResourceNotFoundException;
 import com.akshay.ecommerce.product.dto.ProductRequest;
@@ -26,9 +28,12 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductMapper productMapper;
 
-    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
+    private final CategoryRepository categoryRepository;
+
+    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
+        this.categoryRepository = categoryRepository;
     }
 
     @Transactional
@@ -36,6 +41,12 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse saveProduct(ProductRequest productRequest) {
 
         Product product = productMapper.toEntity(productRequest);
+
+        Category category = categoryRepository
+                .findById(productRequest.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found : " + productRequest.getCategoryId()));
+
+        product.setCategory(category);
 
         if(productRepository.existsBySku(productRequest.getSku()))
         {
@@ -68,6 +79,10 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse updateProduct(ProductRequest productRequest, Long id) {
 
         Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product Not found : " + id));
+
+        Category category = categoryRepository.findById(productRequest.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category not found : " + id));
+
+        product.setCategory(category);
 
         if(!product.getSku().equals(productRequest.getSku())
                 && productRepository.existsBySku(productRequest.getSku())) {

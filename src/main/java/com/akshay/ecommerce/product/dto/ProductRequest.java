@@ -43,4 +43,7 @@ public class ProductRequest {
     @NotNull(message = "Status is required")
     private ProductStatus status;
 
+    @NotNull(message = "Category is required")
+    private Long categoryId;
+
 }

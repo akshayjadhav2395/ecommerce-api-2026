@@ -34,4 +34,7 @@ public class ProductResponse {
 
     private LocalDateTime updatedAt;
 
+    private Long categoryId;
+
+    private String categoryName;
 }
