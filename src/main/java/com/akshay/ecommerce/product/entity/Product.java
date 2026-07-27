@@ -1,11 +1,11 @@
 package com.akshay.ecommerce.product.entity;
 
+import com.akshay.ecommerce.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
 @Setter
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Table(name = "products")
-public class Product {
+public class Product extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,27 +50,5 @@ public class Product {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
-
-
-    @PrePersist
-    public void prePersist() {
-
-        createdAt = LocalDateTime.now();
-
-        updatedAt =  LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-
-        updatedAt = LocalDateTime.now();
-
-    }
 
 }
