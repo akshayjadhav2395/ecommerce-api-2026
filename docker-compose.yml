@@ -1,0 +1,10 @@
+services:
+  ecommerce-api:
+    build: .
+    container_name: ecommerce-api
+
+    ports:
+      - "9092:9092"
+
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
