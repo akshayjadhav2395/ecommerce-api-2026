@@ -1,6 +1,3 @@
 spring:
   application:
     name: ecommerce-api
-
-  profiles:
-    active: dev

@@ -1,10 +1,41 @@
 services:
+
+  mysql:
+    image: mysql:8.4
+    container_name: mysql-db
+    restart: always
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ecommerce_dev
+      MYSQL_USER: ecommerce
+      MYSQL_PASSWORD: ecommerce@2395
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   ecommerce-api:
     build: .
     container_name: ecommerce-api
+
+    depends_on:
+      mysql:
+        condition: service_healthy
 
     ports:
       - "9092:9092"
 
     environment:
       SPRING_PROFILES_ACTIVE: docker
+
+volumes:
+  mysql_data:

@@ -3,10 +3,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://host.docker.internal:3306/ecommerce_dev
+    url: jdbc:mysql://mysql:3306/ecommerce_dev
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: Akshay@2395
+    username: ecommerce
+    password: ecommerce@2395
 
   jpa:
     hibernate:
